@@ -1,0 +1,19 @@
+networks:
+  app-tier:
+    driver: bridge
+services:
+  etcd:
+    image: docker.io/bitnami/etcd:latest
+    networks: 
+      - app-tier
+    ports: 
+      - "2379:2379"
+      - "2380:2380"
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd-server:2379
+  modmail:
+    image: test
+    env_file: .env
+    networks: 
+      - app-tier
