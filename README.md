@@ -24,13 +24,21 @@ Once the bot is added to your server, you can interact by sending it a DM. When 
 
 There are currently no commands for this bot hopefully there will be soon.
 
-| Command | Description
-|---------|-------------|
-
+| permision | Command | Description |
+|-----------|---------|-------------|
+| Admin | $search \<filters\> \<term\>| Type is the search you want to use can be 1) -ltdate -etdate -author and term is the search term |
+| Admin | $ds| Direct Search, your parameters are passed directly to the DB (MongoDB) is a big security risk | 
+| Admin | $close | Archives the complaint putting a full log in admin log |
+| User | $sf | Makes the bot send you a friend reqeust |
+| User | $print | spits out all of the tickets sent by the user |
 
 ## Configuration
 
 There is currently no config file that is still in the works:
 
-| Setting | Value | Description |
-|---------|-------|--------------|
+| Setting | default Value | Description |
+|---------|---------------|-------------|
+| nods | false | Prevents Admins from running direct search due to security risk |
+| prefex | $ | sets the default command prefex
+| ticket_catagory | Null | catagory where the complaint channels are placed | 
+| complaint_log | Null |log where archived messages go |
