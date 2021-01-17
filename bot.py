@@ -8,19 +8,17 @@ import datetime
 from dotenv import load_dotenv
 from pymongo import MongoClient
 
-USER='root'
-PASS='rootpassword'
-
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
+USER = os.getenv('MONGO_USER')
+PASS = os.getenv('MONGO_PASSWORD')
 
 mdbclient = MongoClient('172.20.0.10', 27017 , username=USER, password=PASS)
 
-db = mdbclient['tickets']
-tn = mdbclient['userid']
+ticket_first = mdbclient['tickets']
+user_first = mdbclient['userid']
 
 client = discord.Client()
-
 # some startup Debug information and set status to watching DMs
 @client.event
 async def on_ready():
@@ -42,12 +40,12 @@ async def on_message(message):
         # check to see if message was sent to bot via DM
     if str(message.channel.type) == "private":
 
-        getnumber = tn[str(message.author.id)]
+        get_ticket_number = user_first[str(message.author.id)]
         RemoveID = { "addresses": { "$slice": [0, 1] } ,'_id': 0}
 
             # run a query to check for tickets
 
-        find_old_tickets = getnumber.find({ "status" : "active"}, RemoveID)
+        find_old_tickets = get_ticket_number.find({ "status" : "active"}, RemoveID)
         for ticket_found in find_old_tickets:
 
                 # debugging data
@@ -57,29 +55,28 @@ async def on_message(message):
                 # only show active tickets
 
             if ticket_found['status'] ==  "active":
-                print(tn.list_collection_names())
+                print(ticket_first.list_collection_names())
                 TicketName = ticket_found['TicketName']
                 print('Ticketname is ' + TicketName)
                 already_has_ticket = True
 
         # If there is no ticket created make a new one 
-        amount = len(tn.list_collection_names()) + 1
+        print(ticket_first.list_collection_names())
+        amount = len(ticket_first.list_collection_names()) + 1
         if 'TicketName' not in locals():
             TicketName = 'ticket-' + str(amount)
             user_info = {"TicketName": TicketName, "status" : "active", }
-            getnumber.insert_one(user_info)
+            get_ticket_number.insert_one(user_info)
             already_has_ticket = False
 
             # debug data
             print('78 getnumber.insert_one(user_info)')
             print(TicketName)
-            print(tn.list_collection_names())
-            print(len(tn.list_collection_names()))
+            print(ticket_first.list_collection_names())
+            print(len(ticket_first.list_collection_names()))
             print('couldnt find ticket')
-            print(tn.list_collection_names())
-            print('before ' + str(len(tn.list_collection_names())))
 
-        collection = db[str(TicketName)]
+        collection = ticket_first[str(TicketName)]
         
         guild = discord.utils.get(client.guilds)
         print(guild)
@@ -91,9 +88,9 @@ async def on_message(message):
         search = collection.find(author, RemoveID)
 
         # initilize ticket if user hasn't created one yet
-        ticket_list = db.list_collection_names()
-        print(db.list_collection_names())
-        print(ticket_list)
+        list_of_tickets = ticket_first.list_collection_names()
+#        print(ticket_list.list_collection_names())
+        print(list_of_tickets)
         if not already_has_ticket:
             print(TicketName)
             user_info = {
@@ -108,8 +105,8 @@ async def on_message(message):
             print('115 kp.insert_one({"uid" : message.author.id})')
             print('111 collection.insert(user_info)')
             collection.insert(user_info)
-            ticket_list = tn[TicketName]
-            ticket_list.insert_one({"uid" : message.author.id})
+#            ticket_list = tn[TicketName]
+#            ticket_list.insert_one({"uid" : message.author.id})
 
         collection.update_one(author, update_count)
 
@@ -161,12 +158,12 @@ async def on_message(message):
                address = { "uid" : {"$exists" : "true" } }
                RemoveID = { "addresses": { "$slice": [0, 1] } ,'_id': 0}
                update_count = {"$inc" : { "Count" : 1}}
-               ticket_list = tn[message.channel.name]
+               ticket_list = ticket_first[message.channel.name]
                query = ticket_list.find(address)
                for ticket in query:
                    print(ticket['uid'])
                    uid = ticket['uid']
-               collection = db[message.channel.name]
+               collection = ticket_first[message.channel.name]
                print(uid)
 
                # Log message
@@ -201,5 +198,6 @@ async def on_message(message):
 
                embedVar = discord.Embed(title=message.author.name + '#' + message.author.discriminator,description=message.content ,inline=False)
                await DM.send(embed=embedVar)
+
 
 client.run(TOKEN)
