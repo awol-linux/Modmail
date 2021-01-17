@@ -45,7 +45,7 @@ async def on_message(message):
         # check to see if message was sent to bot via DM
     if str(message.channel.type) == "private":
 
-        getn = tn[str(message.author.id)]
+        getnumber = tn[str(message.author.id)]
         RemoveID = { "addresses": { "$slice": [0, 1] } ,'_id': 0}
 
             # TicketNumber = 204
@@ -53,18 +53,18 @@ async def on_message(message):
 
             # run a query to check for tickets
 
-        find_old_tickets = getn.find({ "status" : "active"}, RemoveID)
-        for key in find_old_tickets:
+        find_old_tickets = getnumber.find({ "status" : "active"}, RemoveID)
+        for ticket_found in find_old_tickets:
 
                 # debugging data
 
-            print(key)
+            print(ticket_found)
 
                 # only show active tickets
 
-            if key['status'] ==  "active":
+            if ticket_found['status'] ==  "active":
                 print(tn.list_collection_names())
-                TicketName = key['TicketName']
+                TicketName = ticket_found['TicketName']
                 print('Ticketname is ' + TicketName)
 
         # If there is no ticket created make a new one 
@@ -75,8 +75,8 @@ async def on_message(message):
             print('before ' + str(len(tn.list_collection_names())))
             TicketName = 'ticket-' + str(amount)
             user_info = {"TicketName": TicketName, "status" : "active", }
-            print('78 getn.insert_one(user_info)')
-            getn.insert_one(user_info)
+            print('78 getnumber.insert_one(user_info)')
+            getnumber.insert_one(user_info)
             print(TicketName)
             print(tn.list_collection_names())
             print(len(tn.list_collection_names()))
@@ -104,7 +104,8 @@ async def on_message(message):
                 "author": message.author.name + '#' + message.author.discriminator,
                 "channel": message.channel.id,
         #                "TicketNumber": TicketNumber,
-                "TicketName" : TicketName
+                "TicketName" : TicketName,
+                "messages" : []
                 }
             
             print('111 collection.insert(user_info)')
@@ -137,9 +138,11 @@ async def on_message(message):
             print(channel)
 
         # Log message 
-        message_data = {"messages" :{"content": message.content, "author": message.author.name + '#' + message.author.discriminator }}
-        collection.insert_one(message_data)
-        print(message_data)
+        message_data = {"content": message.content, "author": message.author.name + '#' + message.author.discriminator }
+        collection.update({'uid': message.author.id }, {'$push': {'messages': message_data}})
+        # print(message_data)
+
+
 
         # Debug data
         for result in search:
