@@ -1,5 +1,5 @@
 FROM python:latest
-RUN apt update
+RUN apt update && apt install vim -y 
 WORKDIR /opt/app
 COPY ./requirements.txt /opt/app
 RUN ls && pip3 install -r requirements.txt
