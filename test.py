@@ -5,6 +5,7 @@ PASS = 'rootpassword'
 # Create connection to MongoDB
 client = MongoClient('172.20.0.10', 27017 , username=USER, password=PASS)
 db = client['tickets']
+uid = client['userid']
 collection = db['ticket-1']
 
 #collection = db['180663440984113152']
@@ -12,7 +13,7 @@ collection = db['ticket-1']
 
 # Insert the dictionary into Mongo
 #collection.insert_one(tickets['uid'])
-print(db.list_collection_names())
+print(uid.list_collection_names())
 #collection.update_one({"count" : {}}, { '$inc': { 'count': 1 }})
 counts = collection.find({},
         { "addresses": { "$slice": [0, 1] } ,'_id': 0}
