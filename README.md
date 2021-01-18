@@ -1,4 +1,4 @@
-# Modmail
+# ModMail
 ## Discord bot used to send anonymous messages to the moderators
 
 ### Setup
