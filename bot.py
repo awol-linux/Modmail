@@ -4,7 +4,8 @@ import os
 import yaml
 from discord.ext import commands
 from dotenv import load_dotenv
-from commands import admin
+from other_commands import admin
+from search_commands import search
 from tickets import DMs
 
 
@@ -23,6 +24,6 @@ async def on_ready():
 
 bot.add_cog(DMs(bot))
 bot.add_cog(admin(bot))
-
+bot.add_cog(search(bot))
 
 bot.run(TOKEN)
