@@ -24,7 +24,7 @@ class test(commands.Cog):
         if message.author == self.bot.user or message.content[0] == '&':
              return
         print(message)
-        await message.channel.send('tr')
+        await message.channel.send('GotIt')
 
 bot.add_cog(test(bot))
 bot.add_cog(admin(bot))
