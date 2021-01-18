@@ -30,8 +30,7 @@ There are currently no commands for this bot hopefully there will be soon.
 | Admin | &user_search [uid] | prints all tickets submitted by that user | 
 | Admin | &mod_search [uid] | prints all tickets that the moderator has been involved | 
 | Admin | &close | Archives the complaint putting a full log in admin log |
-| User | $sf | Makes the bot send you a friend reqeust |
-| User | $print | spits out all of the tickets sent by the user |
+| User | &print | spits out all of the tickets sent by the user |
 
 ## Configuration
 
