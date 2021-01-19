@@ -16,6 +16,8 @@ class admin(commands.Cog):
             embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'] , inline=False)
 
         admin_log = await self.bot.fetch_channel(797996052074201088)
+        owner = await self.bot.fetch_user(mongo.search.get_owner(TicketName))
+        await owner.send(content=f'Hey {owner.name} {TicketName} has been closed here is a transcript. Please feel free to contact us if necessary', embed=embedVar)
         mongo.search.archive_channel(TicketName)
         await admin_log.send(embed=embedVar)
         await ctx.channel.delete()

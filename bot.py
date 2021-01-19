@@ -2,15 +2,12 @@
 
 import os
 import yaml
+TOKEN = os.getenv('DISCORD_TOKEN')
+print(TOKEN)
 from discord.ext import commands
-from dotenv import load_dotenv
 from other_commands import admin
 from search_commands import search
 from tickets import DMs
-
-
-load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='&')
 

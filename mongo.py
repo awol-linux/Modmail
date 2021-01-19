@@ -1,11 +1,9 @@
 from pymongo import MongoClient
-from dotenv import load_dotenv
 import os
-load_dotenv()
 
 PASS = os.getenv('MONGO_PASSWORD')
 USER = os.getenv('MONGO_USER')
-
+print(USER + ' ' + PASS)
 mdbclient = MongoClient('172.20.0.10', 27017, username=USER, password=PASS)
 ticket_first = mdbclient['tickets']
 user_first = mdbclient['userid']
