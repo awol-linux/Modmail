@@ -1,0 +1,7 @@
+# Ignore unnecessary files in the image.
+.git
+.gitignore
+.dockerignore
+*.yml
+*.pgp
+*.md
