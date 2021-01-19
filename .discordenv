@@ -1,0 +1,3 @@
+DISCORD_TOKEN={your-token-here}
+MONGO_USER=root
+MONGO_PASS={secure-password-for-database}
