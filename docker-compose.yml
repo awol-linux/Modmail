@@ -6,7 +6,7 @@ networks:
         - subnet: 172.20.0.0/24
 services:
   modmail:
-    image: test
+    image: modmail
     env_file: .env
     networks: 
       - app-tier
