@@ -5,17 +5,16 @@
 
 1. Create a discord bot
   - see https://discordpy.readthedocs.io/en/latest/discord.html for instructions
+  
 2. Install bot server software
-  - clone the repository `git clone https://gitlab.com/awol-linux/ansible-doc-bot.git`
-  - Install requirments `pip install -r requirments.txt`
-  - create a .env file and put `DISCORD_TOKEN={your-bot-token}` inside it
-  - start the bot `python3 ./bot.py`
-
-3. Alternatively you can use Docker. The bot is not yet in Dockerhub so it still would need to be built.
+### make sure you put your own secrets into the config files before you build the container
 
 ```
 [awol@gaming-amd ~]$ git clone https://github.com/NetworkChuckDiscord/Modmail.git && cd Modmail
-[awol@gaming-amd ~]$ echo {your-discord-token} >> .env
+[awol@gaming-amd ~]$ nano .mongoenv.sample #set the mongodb password here
+[awol@gaming-amd ~]$ mv .mongoenv.sample .mongoenv
+[awol@gaming-amd ~]$ nano .discordenv.sample # set your discord-token and use the same password as set earlier
+[awol@gaming-amd ~]$ mv .discordenv.sample .mongoenv
 [awol@gaming-amd ~]$ docker build . -t modmail
 [awol@gaming-amd ~]$ docker compose up -d
 ```
