@@ -1,3 +1,5 @@
+.mongoenv
+.discordenv
 .env
 env/
 __pycache__/
