@@ -1,7 +1,12 @@
-FROM python:latest
-RUN apt update && apt install vim -y 
+FROM python:3.9.0rc2-alpine3.12
+
 WORKDIR /opt/app
-COPY ./requirements.txt /opt/app
-RUN ls && pip3 install -r requirements.txt
-COPY . /opt/app
-CMD python3 bot.py
+
+ARG environment
+
+COPY . .
+
+RUN apk add --update alpine-sdk && \
+    pip install -r requirements.txt
+
+CMD [ "python", "bot.py" ]
