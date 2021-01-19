@@ -15,9 +15,9 @@
 
 ```
 [awol@gaming-amd ~]$ git clone https://github.com/NetworkChuckDiscord/Modmail.git && cd Modmail
-[awol@gaming-amd ~]$ echo {your-discord-token} >> .env
+[awol@gaming-amd ~]$ echo "DISCORD_TOKEN={your-discord-token}" > .env
 [awol@gaming-amd ~]$ docker build . -t modmail
-[awol@gaming-amd ~]$ docker compose up -d
+[awol@gaming-amd ~]$ docker-compose up -d
 ```
 
 ## Usage
