@@ -11,7 +11,7 @@
 
 ```
 [awol@gaming-amd ~]$ git clone https://github.com/NetworkChuckDiscord/Modmail.git && cd Modmail
-[awol@gaming-amd ~]$ nano .mongoenv.sample #set the mongodb password here
+[awol@gaming-amd ~]$ nano .mongoenv.sample # set the mongodb password here
 [awol@gaming-amd ~]$ mv .mongoenv.sample .mongoenv
 [awol@gaming-amd ~]$ nano .discordenv.sample # set your discord-token and use the same password as set earlier
 [awol@gaming-amd ~]$ mv .discordenv.sample .mongoenv
