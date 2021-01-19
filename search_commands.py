@@ -8,7 +8,7 @@ class search(commands.Cog):
         self.bot = bot
         self._last_member = None
 
-    @commands.has_role(789329882605813760)
+    @commands.has_permissions(administrator=True)
     @commands.command(name='ticket_search', help='Type in the search you want to use can be -before -after -author and term is the search term')
     async def ticket_search(self, ctx, ticket_name):
         embedVar = discord.Embed(title=ticket_name, inline=False)
@@ -18,7 +18,7 @@ class search(commands.Cog):
         admin_log = await self.bot.fetch_channel(797996052074201088)
         await admin_log.send(embed=embedVar)
 
-    @commands.has_role(789329882605813760)
+    @commands.has_permissions(administrator=True)
     @commands.command(name='user_search', help='Type in the search you want to use can be -before -after -author and term is the search term')
     async def user_search(self, ctx, user):
         for TicketName in mongo.search.all_tickets_for_user(user):
@@ -29,7 +29,7 @@ class search(commands.Cog):
             admin_log = await self.bot.fetch_channel(797996052074201088)
             await admin_log.send(embed=embedVar)
 
-    @commands.has_role(789329882605813760)
+    @commands.has_permissions(administrator=True)
     @commands.command(name='mod_search', help='Type in the search you want to use can be -before -after -authopr and term is the search term')
     async def mod_search(self, ctx, user):
         usero = await self.bot.fetch_user(user)

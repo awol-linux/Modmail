@@ -7,7 +7,7 @@ class admin(commands.Cog):
         self.bot = bot
         self._last_member = None
 
-    @commands.has_role(789329882605813760)
+    @commands.has_permissions(administrator=True)
     @commands.command(name='close', help='Archives the complaint putting a full log in admin log')
     async def clear(self, ctx):
         TicketName = ctx.channel.name
