@@ -7,14 +7,12 @@ networks:
 services:
   modmail:
     image: modmail
-    env_file: .env
+    env_file: .discordenv
     networks: 
       - app-tier
   mongodb_container:
     image: mongo:latest
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    env_file: .mongoenv
     ports:
       - 27017:27017
     volumes:

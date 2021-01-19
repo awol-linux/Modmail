@@ -35,6 +35,7 @@ class DMs(commands.Cog):
                     }
 
                 TicketName = mongo.search.new_ticket(user_info)
+                await message.reply(f'Hey {message.author.name} {TicketName} has been opened and a moderator will respond as soon as possible')
 
 
             time = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d-%H:%M:%S-%Z")
