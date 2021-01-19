@@ -9,6 +9,8 @@
 2. Install bot server software
 ### make sure you put your own secrets into the config files before you build the container
 
+#### Please note that some versions of docker-compose may not work
+
 ```
 [awol@gaming-amd ~]$ git clone https://github.com/NetworkChuckDiscord/Modmail.git && cd Modmail
 [awol@gaming-amd ~]$ nano .mongoenv.sample # set the mongodb password here
