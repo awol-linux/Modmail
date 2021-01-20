@@ -4,7 +4,7 @@ import discord
 import datetime
 
 import mongo
-
+catagory_id = 800801411188391957
 # main function
 class DMs(commands.Cog):
     def __init__(self, bot):
@@ -15,11 +15,14 @@ class DMs(commands.Cog):
     async def on_message(self, message):
         #    verify that the bot doesn't respond to itself
 
-        if message.author == self.bot.user or message.content[0] == '&':
+        if message.author == self.bot.user:
             return
-
+        elif message.content is None:
+            return
+        elif message.content[0] == '&':
+            return
             # check to see if message was sent to bot via DM
-        if str(message.channel.type) == "private":
+        elif str(message.channel.type) == "private":
 
             owner = message.author.id
             TicketName = mongo.search.by_user_active(owner)
@@ -55,7 +58,7 @@ class DMs(commands.Cog):
             #    print('#############################################################################################')
 
             channel = discord.utils.get(guild.text_channels, name=TicketName)
-            catagory = discord.utils.get(guild.categories, id=798284727794270229)
+            catagory = discord.utils.get(guild.categories, id=catagory_id)
 
             # verify ticket has appropiate channel
             print(channel)
@@ -68,8 +71,8 @@ class DMs(commands.Cog):
 
             await channel.send(message.content)
 
-        # If message is in ticket catagoru\y
-        elif message.channel.category_id == 798284727794270229:
+        # If message is in ticket catagoruy
+        elif message.channel.category_id == catagory_id:
 
             # Figure out whose ticket it was
             TicketName = message.channel.name

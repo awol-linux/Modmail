@@ -16,7 +16,8 @@ class search():
         query = user_first[str(uid)].find(terms, RemoveID)
         ticket_names = []
         for ticketname in query:
-            ticket_names.append(ticketname['TicketName']) 
+            ticket_names.append(ticketname['TicketName'])
+        print(ticket_names)
         return ticket_names
 
     def by_user_active(uid):
@@ -26,6 +27,7 @@ class search():
         for ticket in query:
             tickets.append(ticket['TicketName'])
         if len(tickets) == 1:
+            print(tickets[0])
             return tickets[0]
         if len(tickets) == 0:
             return None
@@ -38,6 +40,7 @@ class search():
             tickets.append(ticket)
         if len(tickets) == 1:
             return tickets[0]
+            print(tickets[0])
         if len(tickets) == 0:
             return None
 
@@ -46,6 +49,7 @@ class search():
         terms = {"uid": owner}
         push_message = {'$push': {'messages': message_data}}
         update_count = {"$inc" : { "Count" : 1}}
+        print(message_data)
         ticket_first[TicketName].update_one(terms, push_message)
         ticket_first[TicketName].update_one(terms, update_count)
 
@@ -57,6 +61,7 @@ class search():
         ticket_info = {"TicketName" : TicketName, "status": "active"}
         ticket_first[TicketName].insert_one(user_info)
         user_first[uid].insert_one(ticket_info)
+        print(user_info)
         return TicketName
 
     def get_owner(TicketName):
@@ -67,6 +72,7 @@ class search():
             tickets.append(ticket['uid'])
         if len(tickets) == 1:
             return tickets[0]
+            print(tickets[0])
         if len(tickets) == 0:
             return None
 
@@ -79,6 +85,7 @@ class search():
             tickets.append(ticket['messages'])
         if len(tickets) == 1:
             return tickets[0]
+            print(tickets[0])
         if len(tickets) == 0:
             return None
 
@@ -90,6 +97,7 @@ class search():
             query = ticket_first[ticket].find(terms, RemoveID)
             for ticketname in query:
                 all_messages.append(ticketname) 
+            print(all_messages)
         return all_messages
 
     def archive_channel(TicketName):
@@ -100,6 +108,7 @@ class search():
         if len(tickets) == 1:
             uid = tickets[0]
             print(uid)
+        print(tickets)
         new_terms = { "TicketName" : TicketName }
         new_update = { '$set': { 'status' : 'closed' } }
         user_first[str(uid)].update_one(new_terms, new_update)
