@@ -13,9 +13,9 @@ services:
   mongodb_container:
     image: mongo:latest
     env_file: .mongoenv
-    ports:
+    ports: 
       - 27017:27017
-    volumes:
+    volumes: 
       - mongodb_data_container:/data/db
     networks:
         app-tier:
