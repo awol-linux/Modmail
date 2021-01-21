@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import mongo
 
-log_channel_id = 801221657792479242
+command_channel_id = 770779823110094868
 class search(commands.Cog):     
     def __init__(self, bot):
         self.bot = bot
@@ -15,7 +15,7 @@ class search(commands.Cog):
         for message in mongo.search.get_messages_by_tickets(ticket_name):
             embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'] , inline=False)
 
-        admin_log = await self.bot.fetch_channel(log_channel_id)
+        admin_log = await self.bot.fetch_channel(command_channel_id)
         await admin_log.send(embed=embedVar)
 
     @commands.has_permissions(administrator=True)
@@ -26,7 +26,7 @@ class search(commands.Cog):
             message_logs = mongo.search.get_messages_by_tickets(TicketName)
             for message in message_logs:
                 embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'] , inline=False)
-            admin_log = await self.bot.fetch_channel(log_channel_id)
+            admin_log = await self.bot.fetch_channel(command_channel_id)
             await admin_log.send(embed=embedVar)
 
     @commands.has_permissions(administrator=True)
@@ -39,5 +39,5 @@ class search(commands.Cog):
             embedVar = discord.Embed(title=TicketName, inline=False)
             for message in ticket['messages']:
                 embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'    ] , inline=False)
-            admin_log = await self.bot.fetch_channel(log_channel_id)
+            admin_log = await self.bot.fetch_channel(command_channel_id)
             await admin_log.send(embed=embedVar)
