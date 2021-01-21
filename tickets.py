@@ -17,7 +17,7 @@ class DMs(commands.Cog):
 
         if message.author == self.bot.user:
             return
-        elif message.content is None:
+        elif not message.content:
             return
         elif message.content[0] == '&':
             return
