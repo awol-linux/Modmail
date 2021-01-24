@@ -12,13 +12,13 @@
 #### Please note that some versions of docker-compose may not work
 
 ```
-[awol@gaming-amd ~]$ git clone https://github.com/NetworkChuckDiscord/Modmail.git && cd Modmail
-[awol@gaming-amd ~]$ nano .mongoenv.sample # set the mongodb password here
-[awol@gaming-amd ~]$ mv .mongoenv.sample .mongoenv
-[awol@gaming-amd ~]$ nano .discordenv.sample # set your discord-token and use the same password as set earlier
-[awol@gaming-amd ~]$ mv .discordenv.sample .mongoenv
-[awol@gaming-amd ~]$ docker build . -t modmail
-[awol@gaming-amd ~]$ docker compose up -d
+$ git clone https://github.com/NetworkChuckDiscord/Modmail.git && cd Modmail
+$ nano .mongoenv.sample # set the mongodb password here
+$ mv .mongoenv.sample .mongoenv
+$ nano .discordenv.sample # set your discord-token and use the same password as set earlier
+$ mv .discordenv.sample .mongoenv
+$ docker build . -t modmail
+$ docker compose up -d
 ```
 
 ## Usage

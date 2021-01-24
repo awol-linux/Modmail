@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import mongo
 
-log_channel_id = 797996052074201088
+command_channel_id = 770779823110094868
 class search(commands.Cog):     
     def __init__(self, bot):
         self.bot = bot
@@ -11,10 +11,11 @@ class search(commands.Cog):
     @commands.has_permissions(administrator=True)
     @commands.command(name='ticket_search', help='Type in the search you want to use can be -before -after -author and term is the search term')
     async def ticket_search(self, ctx, ticket_name):
-        admin_log = await self.bot.fetch_channel(log_channel_id)
+        admin_log = await self.bot.fetch_channel(command_channel_id)
         count = 0
         embedVar = discord.Embed(title=ticket_name, inline=False)
         for message in mongo.search.get_messages_by_tickets(ticket_name):
+
             if count > 25:
                 await admin_log.send(embed=embedVar)
                 count = 1
@@ -25,7 +26,7 @@ class search(commands.Cog):
             else:
                 embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'] , inline=False)
             count = count + 1
-        await admin_log.send(embed=embedVar)
+            embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'] , inline=False)
 
     @commands.has_permissions(administrator=True)
     @commands.command(name='user_search', help='Type in the search you want to use can be -before -after -author and term is the search term')
@@ -35,7 +36,7 @@ class search(commands.Cog):
             message_logs = mongo.search.get_messages_by_tickets(TicketName)
             for message in message_logs:
                 embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'] , inline=False)
-            admin_log = await self.bot.fetch_channel(log_channel_id)
+            admin_log = await self.bot.fetch_channel(command_channel_id)
             await admin_log.send(embed=embedVar)
 
     @commands.has_permissions(administrator=True)
@@ -47,6 +48,6 @@ class search(commands.Cog):
             TicketName = ticket['TicketName']
             embedVar = discord.Embed(title=TicketName, inline=False)
             for message in ticket['messages']:
-                embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'] , inline=False)
-            admin_log = await self.bot.fetch_channel(log_channel_id)
+                embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'    ] , inline=False)
+            admin_log = await self.bot.fetch_channel(command_channel_id)
             await admin_log.send(embed=embedVar)
