@@ -7,7 +7,7 @@
 | ------------- | -------------------------------------------------------- |  
 | A discord bot |  https://discordpy.readthedocs.io/en/latest/discord.html |
 | Docker |  https://docs.docker.com/engine/install/ |
-| docker-compose =< 1.27 |  https://docs.docker.com/compose/install/ | 
+| Docker-compose =< 1.27 |  https://docs.docker.com/compose/install/ | 
  
 ### Installation instructions
 #### Make sure you put your own secrets into the config files before you build the container
