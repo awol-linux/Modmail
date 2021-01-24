@@ -38,7 +38,7 @@ class DMs(commands.Cog):
                     }
 
                 TicketName = mongo.search.new_ticket(user_info)
-                await message.reply(f'Hey {message.author.name} {TicketName} has been opened and a moderator will respond as soon as possible \n Please not this modmail is fully anonyonmis only the admins can see who you are. Please provide your username, if you feel that your username may be necessary for us to help solve your problem.')
+                await message.reply(f'Hey {message.author.name}, {TicketName} has been opened and a moderator will respond as soon as possible\n Please note this ModMail is anonynmous, only server admins can see who you are.\n Please provide your username, if you feel that your username may be necessary for us to help solve your problem.')
 
 
             time = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d-%H:%M:%S-%Z")
