@@ -5,7 +5,7 @@
 #### Dependencys
 | Name| installation instructions | 
 | ------------- | -------------------------------------------------------- |  
-| A discord bot |  https://discordpy.readthedocs.io/en/latest/discord.html |
+| A Discord bot |  https://discordpy.readthedocs.io/en/latest/discord.html |
 | Docker |  https://docs.docker.com/engine/install/ |
 | Docker-compose =< 1.27 |  https://docs.docker.com/compose/install/ | 
  
