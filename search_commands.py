@@ -2,13 +2,13 @@ import discord
 from discord.ext import commands
 import mongo
 
-command_channel_id = 797996052074201088
+command_channel_id = 770779823110094868 
 class search(commands.Cog):     
     def __init__(self, bot):
         self.bot = bot
         self._last_member = None
 
-#    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(administrator=True)
     @commands.command(name='ticket_search', help='Type in the search you want to use can be -before -after -author and term is the search term')
     async def ticket_search(self, ctx, TicketName):
         admin_log = await self.bot.fetch_channel(command_channel_id)
