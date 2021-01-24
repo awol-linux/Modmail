@@ -27,7 +27,7 @@ Once the bot is added to your server, you can interact by sending it a DM. When 
 
 | permision | Command | Description |
 |-----------|---------|-------------|
-| Admin | &search [ticket-number] | Type is the search you want to use can be 1) -ltdate -etdate -author and term is the search term |
+| Admin | &search [ticket-name] | Type is the search you want to use can be 1) -ltdate -etdate -author and term is the search term |
 | Admin | &user_search [uid] | prints all tickets submitted by that user | 
 | Admin | &mod_search [uid] | prints all tickets that the moderator has been involved | 
 | Admin | &close | Archives the complaint putting a full transcript in admin log |
@@ -43,4 +43,4 @@ There is currently no config file that is still in the works:
 |---------|---------------|-------------|
 | prefex | & | sets the default command prefex
 | ticket_catagory | Null | catagory where the complaint channels are placed | 
-| complaint_log | Null |log where archived messages go |
+| complaint_log | Null | log where archived messages go |
