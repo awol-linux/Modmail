@@ -1,16 +1,16 @@
 # ModMail
 ## Discord bot used to send anonymous messages to the moderators
 
-### Setup
-
-1. Create a discord bot
-  - see https://discordpy.readthedocs.io/en/latest/discord.html for instructions
-  
-2. Install bot server software
-### make sure you put your own secrets into the config files before you build the container
-
-#### Please note that some versions of docker-compose may not work
-
+### Setup  
+#### Dependencys
+| Name| installation instructions | 
+| ------------- | -------------------------------------------------------- |  
+| A discord bot |  https://discordpy.readthedocs.io/en/latest/discord.html |
+| Docker |  https://docs.docker.com/engine/install/ |
+| docker-compose =< 1.27 |  https://docs.docker.com/compose/install/ | 
+ 
+### stallation instructions
+### Make sure you put your own secrets into the config files before you build the container
 ```
 $ git clone https://github.com/NetworkChuckDiscord/Modmail.git && cd Modmail
 $ nano .mongoenv.sample # set the mongodb password here
