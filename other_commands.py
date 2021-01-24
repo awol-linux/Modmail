@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord
 import mongo
-log_channel_id = 801221657792479242 
+log_channel_id = 801221657792479242
 class admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
