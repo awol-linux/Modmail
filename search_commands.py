@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import mongo
 
-log_channel_id = 801221657792479242
+log_channel_id = 797996052074201088
 class search(commands.Cog):     
     def __init__(self, bot):
         self.bot = bot
@@ -11,11 +11,20 @@ class search(commands.Cog):
     @commands.has_permissions(administrator=True)
     @commands.command(name='ticket_search', help='Type in the search you want to use can be -before -after -author and term is the search term')
     async def ticket_search(self, ctx, ticket_name):
+        admin_log = await self.bot.fetch_channel(log_channel_id)
+        count = 0
         embedVar = discord.Embed(title=ticket_name, inline=False)
         for message in mongo.search.get_messages_by_tickets(ticket_name):
-            embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'] , inline=False)
-
-        admin_log = await self.bot.fetch_channel(log_channel_id)
+            if count > 25:
+                await admin_log.send(embed=embedVar)
+                count = 1
+                embedVar = discord.Embed(title=ticket_name + '(cont)', inline=False)
+            if len(message['content']) > 1000:
+                embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'][0:1000], inline=False)
+                embedVar.add_field(name=message['author'] + ' (cont)', value=message['content'][1000:2005] , inline=False)
+            else:
+                embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'] , inline=False)
+            count = count + 1
         await admin_log.send(embed=embedVar)
 
     @commands.has_permissions(administrator=True)
@@ -38,6 +47,6 @@ class search(commands.Cog):
             TicketName = ticket['TicketName']
             embedVar = discord.Embed(title=TicketName, inline=False)
             for message in ticket['messages']:
-                embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'    ] , inline=False)
+                embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'] , inline=False)
             admin_log = await self.bot.fetch_channel(log_channel_id)
             await admin_log.send(embed=embedVar)
