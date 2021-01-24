@@ -31,7 +31,7 @@ Once the bot is added to your server, you can interact by sending it a DM. When 
 | Admin | &user_search [uid] | prints all tickets submitted by that user | 
 | Admin | &mod_search [uid] | prints all tickets that the moderator has been involved | 
 | Admin | &close | Archives the complaint putting a full transcript in admin log |
-| Admin | &force_close | Archives the complaint putting a full log in admin log without DMing the owner. Only use when the owner has left the server | 
+| Admin | &force_close | Archives the complaint putting a full log in admin log without DMing the owner. Only use when the ticket owner has left the server | 
 
 ## Configuration
 
