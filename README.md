@@ -2,7 +2,7 @@
 ## Discord bot used to send anonymous messages to the moderators
 
 ### Setup  
-#### Dependencys
+#### Dependencies
 | Name| installation instructions | 
 | ------------- | -------------------------------------------------------- |  
 | A Discord bot |  https://discordpy.readthedocs.io/en/latest/discord.html |
@@ -27,10 +27,10 @@ Once the bot is added to your server, you can interact by sending it a DM. When 
 
 | permision | Command | Description |
 |-----------|---------|-------------|
-| Admin | &search [ticket-name] | Type is the search you want to use can be 1) -ltdate -etdate -author and term is the search term |
+| Admin | &search [ticket-name] | |
 | Admin | &user_search [uid] | prints all tickets submitted by that user | 
-| Admin | &mod_search [uid] | prints all tickets that the moderator has been involved | 
-| Admin | &close | Archives the complaint putting a full transcript in admin log |
+| Admin | &mod_search [uid] | prints all tickets that the specified moderator has sent a message in| 
+| Admin | &close | Archives the complaint putting a full transcript in admin log and DMing it to the ticket owner |
 | Admin | &force_close | Archives the complaint putting a full log in admin log without DMing the owner. Only use when the ticket owner has left the server | 
 
 ## Configuration
@@ -42,5 +42,5 @@ There is currently no config file that is still in the works:
 | Setting | default Value | Description |
 |---------|---------------|-------------|
 | prefex | & | sets the default command prefex
-| ticket_catagory | Null | catagory where the complaint channels are placed | 
+| ticket_catagory | Null | category where the complaint channels are placed | 
 | complaint_log | Null | log where archived messages go |
