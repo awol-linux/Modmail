@@ -15,7 +15,7 @@ class admin(commands.Cog):
         try:
             await owner.send(content=f'Hey {owner.name} {TicketName} has been closed here is a transcript. Please feel free to contact us if necessary')
         except:
-            await ctx.reply('owner has left the server please use force_close')
+            await ctx.reply('The ticket owner has left the server. Please use force_close')
             return
         count = 0
         embedVar = discord.Embed(title=TicketName, inline=False)

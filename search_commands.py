@@ -25,7 +25,7 @@ class search(commands.Cog):
             else:
                 embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'] , inline=False)
                 count = count + 1
-            await admin_log.send(embed=embedVar)
+        await admin_log.send(embed=embedVar)
 
     @commands.has_permissions(administrator=True)
     @commands.command(name='user_search', help='Type in the search you want to use can be -before -after -author and term is the search term')
