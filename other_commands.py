@@ -33,9 +33,8 @@ class admin(commands.Cog):
                 embedVar.add_field(name=message['author'] + '\n' + message['Time'], value=message['content'] , inline=False)
                 count = count + 1
         await owner.send(embed=embedVar)
-
-        mongo.search.archive_channel(TicketName)
         await admin_log.send(embed=embedVar)
+        mongo.search.archive_channel(TicketName)
         await ctx.channel.delete()
     
 
