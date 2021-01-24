@@ -27,7 +27,7 @@ Once the bot is added to your server, you can interact by sending it a DM. When 
 
 | permision | Command | Description |
 |-----------|---------|-------------|
-| Admin | &search [ticket-name] | |
+| Admin | &search [ticket-name] | prints a transcript of the provided ticket |
 | Admin | &user_search [uid] | prints all tickets submitted by that user | 
 | Admin | &mod_search [uid] | prints all tickets that the specified moderator has sent a message in| 
 | Admin | &close | Archives the complaint putting a full transcript in admin log and DMing it to the ticket owner |
