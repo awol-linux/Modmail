@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import mongo
 
-command_channel_id = 770779823110094868 
+command_channel_id = mongo.settings.get('command_channel_id')
 class search(commands.Cog):     
     def __init__(self, bot):
         self.bot = bot

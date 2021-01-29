@@ -1,21 +1,31 @@
 # bot.py
 
 import os
-import yaml
-TOKEN = os.getenv('DISCORD_TOKEN')
 from discord.ext import commands
+import discord
+import mongo 
+
+if not mongo.settings.print_all():
+    import defaults 
+else:
+    print(mongo.settings.print_all())
+
 from other_commands import admin
 from search_commands import search
 from tickets import DMs
-import discord
 
-bot = commands.Bot(command_prefix='&', status='idle', activity=discord.Activity(type=discord.ActivityType.watching, name="my DM's"))
+TOKEN = os.getenv('DISCORD_TOKEN')
 
-# client = discord.Client()
+bot = commands.Bot(command_prefix=mongo.settings.get('prefix'), 
+                   status='idle', 
+                   activity=discord.Activity(
+                       type=discord.ActivityType.watching, 
+                       name="my DM's"))
+
 # some startup Debug information and set status to watching DMs
+
 @bot.event
 async def on_ready():
-#    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='DM for complaints'))    
     print('Connected to bot: {}'.format(bot.user.name))
     print('Bot ID: {}'.format(bot.user.id))
 
