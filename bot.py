@@ -5,7 +5,6 @@ from discord.ext import commands
 import discord
 import mongo 
 
-
 if not mongo.settings.print_all():
     import defaults 
 else:
