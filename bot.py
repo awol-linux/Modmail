@@ -1,5 +1,5 @@
 # bot.py
-
+import test
 import os
 import yaml
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -8,8 +8,9 @@ from other_commands import admin
 from search_commands import search
 from tickets import DMs
 import discord
+import mongo 
 
-bot = commands.Bot(command_prefix='&', status='idle', activity=discord.Activity(type=discord.ActivityType.watching, name="my DM's"))
+bot = commands.Bot(command_prefix=mongo.settings.get('prefix'), status='idle', activity=discord.Activity(type=discord.ActivityType.watching, name="my DM's"))
 
 # client = discord.Client()
 # some startup Debug information and set status to watching DMs

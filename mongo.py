@@ -6,6 +6,8 @@ USER = os.getenv('MONGO_USER')
 mdbclient = MongoClient('172.20.0.10', 27017, username=USER, password=PASS)
 ticket_first = mdbclient['tickets']
 user_first = mdbclient['userid']
+setting = mdbclient['settingdb']
+settingcol = setting['settings']
 RemoveID = { "addresses": { "$slice": [0, 1] } ,'_id': 0}
 
 
@@ -112,3 +114,17 @@ class search():
         new_terms = { "TicketName" : TicketName }
         new_update = { '$set': { 'status' : 'closed' } }
         user_first[str(uid)].update_one(new_terms, new_update)
+
+class settings():
+    def get(othersetting):
+        terms = { othersetting : {"$exists" : "true" } }
+        values = []
+        for value in settingcol.find(terms, RemoveID):
+            values.append(value[othersetting])
+        if len(values) == 1:
+            return values[0]
+        elif len(values) == 0:
+            return None
+        else:
+            return values
+   # def     

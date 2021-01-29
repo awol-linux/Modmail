@@ -4,7 +4,9 @@ import discord
 import datetime
 
 import mongo
-catagory_id = 800801411188391957
+# catagory_id = 800801411188391957
+catagory_id = 798284727794270229 
+
 # main function
 class DMs(commands.Cog):
     def __init__(self, bot):
