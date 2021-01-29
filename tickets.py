@@ -4,7 +4,7 @@ import discord
 import datetime
 
 import mongo
-catagory_id = mongo.settings.get('category_id')
+category_id = mongo.settings.get('category_id')
 print(f' category ID = {category_id}')
 # main function
 class DMs(commands.Cog):
