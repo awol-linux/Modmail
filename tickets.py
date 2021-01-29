@@ -4,9 +4,8 @@ import discord
 import datetime
 
 import mongo
-# catagory_id = 800801411188391957
-catagory_id = 798284727794270229 
-
+catagory_id = mongo.settings.get('catagory_id')
+print(f' catagory ID = {catagory_id}')
 # main function
 class DMs(commands.Cog):
     def __init__(self, bot):
@@ -21,7 +20,7 @@ class DMs(commands.Cog):
             return
         elif not message.content:
             return
-        elif message.content[0] == '&':
+        elif message.content[0] == mongo.settings.get('prefix'):
             return
             # check to see if message was sent to bot via DM
         elif str(message.channel.type) == "private":
@@ -66,6 +65,7 @@ class DMs(commands.Cog):
             print(channel)
             if channel is None:
                 print('creating_channel')
+                print(catagory)
                 await guild.create_text_channel(TicketName, category=catagory)
                 channel = discord.utils.get(guild.text_channels, name=TicketName)
                 print(channel)

@@ -127,4 +127,9 @@ class settings():
             return None
         else:
             return values
-   # def     
+    def print_all():
+       terms = {}
+       values = []
+       for value in settingcol.find(terms, RemoveID):
+            values.append(value)
+       return values
