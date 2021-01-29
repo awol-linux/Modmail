@@ -16,7 +16,7 @@ client.drop_database(setting)
 # Insert the settings into Mongo
 
 settingcol.insert_one({ "prefix" : "&", 
-    "catagory_id": 798284727794270229,
+    "category_id": 798284727794270229,
     "command_channel_id" : 797996052074201088,
     "log_channel_id" : 788119131068301335 })
 
