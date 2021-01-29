@@ -13,6 +13,7 @@ services:
   mongodb_container:
     image: mongo:latest
     env_file: .mongoenv
+    command: [ mongod,  --noscripting]
     ports: 
       - 27017:27017
     volumes: 
