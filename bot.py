@@ -17,7 +17,6 @@ from other_commands import help
 
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-
 bot = commands.Bot(command_prefix=settings.get('prefix'), 
                    status='idle',
                    help_command=help(),
@@ -31,8 +30,8 @@ bot = commands.Bot(command_prefix=settings.get('prefix'),
 async def on_ready():
     print('Connected to bot: {}'.format(bot.user.name))
     print('Bot ID: {}'.format(bot.user.id))
-
-
+    print('Prefix is: {}'.format(settings.get('prefix')))
+    print('Catagory ID: {}'.format(settings.get('category_id')))
 
 bot.load_extension('tickets')
 bot.load_extension('search_commands')

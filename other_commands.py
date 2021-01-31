@@ -7,7 +7,7 @@ log_channel_id = settings.get('log_channel_id')
 
 def setup(bot):
     bot.add_cog(admin(bot))
-#    bot.add_cog(help(bot))
+    bot.add_cog(settings_commands(bot))
 
 class admin(commands.Cog):
     def __init__(self, bot):
@@ -69,17 +69,23 @@ class admin(commands.Cog):
         await admin_log.send(embed=embedVar)
         await ctx.channel.delete()
 
+
+
+class settings_commands(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+        self._last_member = None
+
     @commands.has_permissions(administrator=True)
     @commands.command(name='lookup', help='Shows the closest settings and their value')
     async def lookup(self, ctx, arg):
         settingkeys = []
         for setting in settings.print_all():
-            for key in setting.keys():
-                settingkeys.append(key)
+            settingkeys.append(setting['name'])
         embedVar = discord.Embed(title='Settings', inline=False)
         matches = (get_close_matches(arg, settingkeys))
         for match in matches:
-            embedVar.add_field(name=match + ' = ' + str(settings.get(match)), value='will put description here 1 day', inline=False)
+            embedVar.add_field(name=match + ' = ' + str(settings.get(match)), value=settings.get_description(arg), inline=False)
         await ctx.reply(embed=embedVar)
 
     @commands.has_permissions(administrator=True)
@@ -90,7 +96,7 @@ class admin(commands.Cog):
         if update:
             embedVar.add_field(name='Old', value=update['oldkey'], inline=True)
             embedVar.add_field(name='New', value=update['newkey'], inline=True)
-            embedVar.add_field(name='Description', value='Will put description here 1 day')
+            embedVar.add_field(name='Description', value=settings.get_description(arg1))
             await self.reload(ctx)
             await ctx.reply(embed=embedVar, content='reloaded')
         else:
@@ -108,12 +114,11 @@ class admin(commands.Cog):
 
     @commands.has_permissions(administrator=True)
     @commands.command(name='show', help='Shows the settings and their value')
-    async def lookup(self, ctx):
+    async def show(self, ctx):
         settingkeys = []
         embedVar = discord.Embed(title='Settings', inline=False)
         for setting in settings.print_all():
-            for key in setting.keys():
-                embedVar.add_field(name=key + ' = ' + str(settings.get(key)), value='will put description here 1 day', inline=False)
+            embedVar.add_field(name=setting['name'] + ' = ' + str(setting['value']), value=setting['Description'], inline=False)
         await ctx.reply(embed=embedVar)
 
 class help(commands.MinimalHelpCommand):

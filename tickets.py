@@ -6,7 +6,6 @@ import datetime
 import mongo
 settings = mongo.settings()
 category_id = settings.get('category_id')
-print(f' category ID = {category_id}')
 
 def setup(bot):
     bot.add_cog(DMs(bot))
