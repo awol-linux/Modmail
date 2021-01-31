@@ -116,6 +116,7 @@ class admin(commands.Cog):
                 embedVar.add_field(name=key + ' = ' + str(settings.get(key)), value='will put description here 1 day', inline=False)
         await ctx.reply(embed=embedVar)
 
+
 class help(commands.MinimalHelpCommand):
     async def send_pages(self):
         destination = self.get_destination()
