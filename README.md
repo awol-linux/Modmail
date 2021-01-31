@@ -36,7 +36,7 @@ Once the bot is added to your server, you can interact by sending it a DM. When 
 | admin | &lookup | search for setting name, uses difflib to find the closest matches | 
 | admin | &reload | reload the bot listners, command, prefix |
 | admin | &set [key] [value] | Set a setting and value (setting must exist)
-| all | help | shows a help message |
+| all | &help | shows a help message |
 
 ## Configuration
 
