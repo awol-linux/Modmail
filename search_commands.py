@@ -1,15 +1,19 @@
 import discord
 from discord.ext import commands
 import mongo
+settings = mongo.settings()
+command_channel_id = settings.get('command_channel_id')
 
-command_channel_id = mongo.settings.get('command_channel_id')
+def setup(bot):
+   bot.add_cog(search(bot)) 
+
 class search(commands.Cog):     
     def __init__(self, bot):
         self.bot = bot
         self._last_member = None
 
     @commands.has_permissions(administrator=True)
-    @commands.command(name='ticket_search', help='Type in the search you want to use can be -before -after -author and term is the search term')
+    @commands.command(name='ticket_search', help='Enter a ticket-name (E.G ticket-1) aand get a full transcript')
     async def ticket_search(self, ctx, TicketName):
         admin_log = await self.bot.fetch_channel(command_channel_id)
         count = 0
@@ -28,14 +32,14 @@ class search(commands.Cog):
         await admin_log.send(embed=embedVar)
 
     @commands.has_permissions(administrator=True)
-    @commands.command(name='user_search', help='Type in the search you want to use can be -before -after -author and term is the search term')
+    @commands.command(name='user_search', help='get a full transcript of all tickets by user')
     async def user_search(self, ctx, user):
         for TicketName in mongo.search.all_tickets_for_user(user):
             print(TicketName)
             await self.ticket_search(ctx, TicketName)
 
     @commands.has_permissions(administrator=True)
-    @commands.command(name='mod_search', help='Type in the search you want to use can be -before -after -authopr and term is the search term')
+    @commands.command(name='mod_search', help='Get a full transcript of all tickets the moderator was involved in')
     async def mod_search(self, ctx, user):
         user_object = await self.bot.fetch_user(user)
         username = user_object.name + '#' + user_object.discriminator

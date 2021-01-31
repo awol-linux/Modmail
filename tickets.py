@@ -4,8 +4,13 @@ import discord
 import datetime
 
 import mongo
-category_id = mongo.settings.get('category_id')
+settings = mongo.settings()
+category_id = settings.get('category_id')
 print(f' category ID = {category_id}')
+
+def setup(bot):
+    bot.add_cog(DMs(bot))
+
 # main function
 class DMs(commands.Cog):
     def __init__(self, bot):
@@ -20,7 +25,7 @@ class DMs(commands.Cog):
             return
         elif not message.content:
             return
-        elif message.content[0] == mongo.settings.get('prefix'):
+        elif message.content[0] == settings.get('prefix'):
             return
             # check to see if message was sent to bot via DM
         elif str(message.channel.type) == "private":

@@ -1,7 +1,14 @@
 from discord.ext import commands
 import discord
 import mongo
-log_channel_id = mongo.settings.get('log_channel_id')
+from difflib import get_close_matches
+settings = mongo.settings()
+log_channel_id = settings.get('log_channel_id')
+
+def setup(bot):
+    bot.add_cog(admin(bot))
+#    bot.add_cog(help(bot))
+
 class admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -61,3 +68,48 @@ class admin(commands.Cog):
         mongo.search.archive_channel(TicketName)
         await admin_log.send(embed=embedVar)
         await ctx.channel.delete()
+
+    @commands.has_permissions(administrator=True)
+    @commands.command(name='lookup', help='Shows the closest settings and their value')
+    async def lookup(self, ctx, arg):
+        settingkeys = []
+        for setting in settings.print_all():
+            for key in setting.keys():
+                settingkeys.append(key)
+        embedVar = discord.Embed(title='Settings', inline=False)
+        matches = (get_close_matches(arg, settingkeys))
+        for match in matches:
+            embedVar.add_field(name=match + ' = ' + str(settings.get(match)), value='will put description here 1 day', inline=False)
+        await ctx.reply(embed=embedVar)
+
+    @commands.has_permissions(administrator=True)
+    @commands.command(name='set', help='Changes the value of a setting')
+    async def set(self, ctx, arg1, arg2 , *args):
+        embedVar = discord.Embed(title='Settings', inline=False)
+        update = settings.update(arg1, arg2)
+        if update:
+            embedVar.add_field(name='Old', value=update['oldkey'], inline=True)
+            embedVar.add_field(name='New', value=update['newkey'], inline=True)
+            embedVar.add_field(name='Description', value='Will put description here 1 day')
+            await self.reload(ctx)
+            await ctx.reply(embed=embedVar, content='reloaded')
+        else:
+            await ctx.reply(f"{arg1} didn't have any results. Try {settings.get('prefix')}lookup {arg1} to search.")
+
+    @commands.has_permissions(administrator=True)
+    @commands.command(name='reload', help='Manually reload config')
+    async def reload(self, ctx):
+        self.bot.reload_extension('other_commands')
+        self.bot.reload_extension('search_commands')
+        self.bot.reload_extension('tickets')
+        self.bot.command_prefix = settings.get('prefix')
+        if ctx.command == 'reload':
+            await ctx.reply('reloaded')
+
+
+class help(commands.MinimalHelpCommand):
+    async def send_pages(self):
+        destination = self.get_destination()
+        for page in self.paginator.pages:
+            emby = discord.Embed(description=page)
+            await destination.send(embed=emby)
