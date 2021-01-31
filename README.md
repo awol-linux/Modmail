@@ -15,6 +15,7 @@
 $ git clone https://github.com/NetworkChuckDiscord/Modmail.git && cd Modmail
 $ nano .mongoenv.sample # set the mongodb password here
 $ cp .mongoenv.sample .mongoenv
+$ nano defaults.py # set default settings in here see chart below for descriptions
 $ nano .discordenv.sample # set your discord-token and use the same password as set earlier
 $ cp .discordenv.sample .mongoenv
 $ docker build . -t modmail
@@ -32,15 +33,16 @@ Once the bot is added to your server, you can interact by sending it a DM. When 
 | Admin | &mod_search [uid] | Prints all tickets that the specified moderator has sent a message in| 
 | Admin | &close | Archives the complaint putting a full transcript in admin log and DMing it to the ticket owner |
 | Admin | &force_close | Archives the complaint putting a full log in admin log without DMing the owner. Only use when the ticket owner has left the server | 
+| admin | &lookup | search for setting name, uses difflib to find the closest matches | 
+| admin | &reload | reload the bot listners, command, prefix |
+| admin | &set [key] [value] | Set a setting and value (setting must exist)
+| all | help | shows a help message |
 
 ## Configuration
 
-### none of these work
-
-There is currently no config file that is still in the works:
-
-| Setting | default Value | Description |
-|---------|---------------|-------------|
-| prefex | & | sets the default command prefex
-| ticket_catagory | Null | category where the complaint channels are placed | 
-| complaint_log | Null | log where archived messages go |
+| Setting | Description |
+|---------|-------------|
+| prefex | sets the default command prefex
+| catagory_id | category where the complaint channels are placed | 
+| log_channel_id | channel where closed tickets go | 
+| command_channel_id | channel where command respnses go | 
