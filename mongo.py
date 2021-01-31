@@ -116,7 +116,10 @@ class search():
         user_first[str(uid)].update_one(new_terms, new_update)
 
 class settings():
-    def get(othersetting):
+    def __init__(self):
+        self.test = 'test'
+
+    def get(self, othersetting):
         terms = { othersetting : {"$exists" : "true" } }
         values = []
         for value in settingcol.find(terms, RemoveID):
@@ -127,9 +130,24 @@ class settings():
             return None
         else:
             return values
-    def print_all():
+
+    def print_all(self):
        terms = {}
        values = []
        for value in settingcol.find(terms, RemoveID):
             values.append(value)
        return values
+
+    def create(self, key, value):
+        terms = { key : {"$exists" : "true" } }
+        setting = { '$set' : { key : value }}
+        settingcol.update_one(terms, setting, upsert = True)
+
+    def update(self, key, value):
+        if self.get(key):
+            oldkey = self.get(key)
+            terms = { key : {"$exists" : "true" } }
+            setting = { '$set' : { key : value }}
+            settingcol.update_one(terms, setting)
+            out = { 'oldkey' : oldkey, 'newkey': self.get(key) }
+            return out

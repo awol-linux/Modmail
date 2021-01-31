@@ -5,19 +5,22 @@ from discord.ext import commands
 import discord
 import mongo 
 
-if not mongo.settings.print_all():
+settings = mongo.settings()
+if not settings.print_all():
     import defaults 
 else:
-    print(mongo.settings.print_all())
+    print(settings.print_all())
 
-from other_commands import admin
-from search_commands import search
-from tickets import DMs
+from other_commands import help
+#from search_commands import search
+#from tickets import DMs
 
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-bot = commands.Bot(command_prefix=mongo.settings.get('prefix'), 
-                   status='idle', 
+
+bot = commands.Bot(command_prefix=settings.get('prefix'), 
+                   status='idle',
+                   help_command=help(),
                    activity=discord.Activity(
                        type=discord.ActivityType.watching, 
                        name="my DM's"))
@@ -29,8 +32,13 @@ async def on_ready():
     print('Connected to bot: {}'.format(bot.user.name))
     print('Bot ID: {}'.format(bot.user.id))
 
-bot.add_cog(DMs(bot))
-bot.add_cog(admin(bot))
-bot.add_cog(search(bot))
+
+
+bot.load_extension('tickets')
+bot.load_extension('search_commands')
+bot.load_extension('other_commands')
+
+
+
 
 bot.run(TOKEN)
