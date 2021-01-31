@@ -106,6 +106,15 @@ class admin(commands.Cog):
         if ctx.command == 'reload':
             await ctx.reply('reloaded')
 
+    @commands.has_permissions(administrator=True)
+    @commands.command(name='show', help='Shows the settings and their value')
+    async def lookup(self, ctx):
+        settingkeys = []
+        embedVar = discord.Embed(title='Settings', inline=False)
+        for setting in settings.print_all():
+            for key in setting.keys():
+                embedVar.add_field(name=key + ' = ' + str(settings.get(key)), value='will put description here 1 day', inline=False)
+        await ctx.reply(embed=embedVar)
 
 class help(commands.MinimalHelpCommand):
     async def send_pages(self):
