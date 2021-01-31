@@ -15,10 +15,11 @@ client.drop_database(setting)
 
 # Insert the settings into Mongo
 
-settingcol.insert_many([{ "prefix" : "&" }, 
-        { "category_id": 798284727794270229 } ,
-        { "command_channel_id" : 797996052074201088},
-        { "log_channel_id" : 788119131068301335 }])
+settingcol.insert_many([
+    { 'name' : "prefix", 'value' : "&", 'Description' : 'Sets the command prefix' }, 
+    { 'name' : "category_id",  'value' : 798284727794270229, 'Description' : 'Category where the complaint channels are placed' } ,
+    { 'name' : "command_channel_id" , 'value' : 797996052074201088, 'Description': 'Channel where closed tickets get logged'},
+    { 'name' : "log_channel_id", 'value' : 788119131068301335, 'Description': 'Channel where search responses go' }])
 
 counts = settingcol.find({},{ "addresses": { "$slice": [0, 1] } ,'_id': 0})
 for key in counts:

@@ -120,10 +120,10 @@ class settings():
         self.test = 'test'
 
     def get(self, othersetting):
-        terms = { othersetting : {"$exists" : "true" } }
+        terms = { 'name' : othersetting }       
         values = []
         for value in settingcol.find(terms, RemoveID):
-            values.append(value[othersetting])
+            values.append(value['value'])
         if len(values) == 1:
             return values[0]
         elif len(values) == 0:
@@ -139,15 +139,27 @@ class settings():
        return values
 
     def create(self, key, value):
-        terms = { key : {"$exists" : "true" } }
-        setting = { '$set' : { key : value }}
+        terms = { 'name' : key }
+        setting = { '$set' : { 'value' : value }}
         settingcol.update_one(terms, setting, upsert = True)
 
     def update(self, key, value):
         if self.get(key):
             oldkey = self.get(key)
-            terms = { key : {"$exists" : "true" } }
-            setting = { '$set' : { key : value }}
+            terms = { 'name' : key }
+            setting = { '$set' : { 'value' : value }}
             settingcol.update_one(terms, setting)
             out = { 'oldkey' : oldkey, 'newkey': self.get(key) }
             return out
+    def get_description(self, name):
+        terms = { 'name' : name }
+        values = []
+        for value in settingcol.find(terms, RemoveID):
+            values.append(value['Description'])
+        if len(values) == 1:
+            print(values)
+            return values[0]
+        elif len(values) == 0:
+            return None
+        else:
+            return values
