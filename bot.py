@@ -31,9 +31,9 @@ async def on_ready():
     print('Connected to bot: {}'.format(bot.user.name))
     print('Bot ID: {}'.format(bot.user.id))
     print('Prefix is: {}'.format(settings.get('prefix')))
-    print('Catagory ID: {}'.format(settings.get('category_id')))
+    print('Category ID: {}'.format(settings.get('category_id')))
 
-bot.load_extension('catagory_listener')
+bot.load_extension('category_listener')
 bot.load_extension('DM_listener')
 bot.load_extension('search_commands')
 bot.load_extension('other_commands')
