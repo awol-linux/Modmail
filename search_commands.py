@@ -31,7 +31,7 @@ class search(commands.Cog):
                 count = count + 1
         await admin_log.send(embed=embedVar)
 
-
+    @commands.has_permissions(administrator=True)
     @commands.command(name='user_search', help='Gets all tickets for a user and uses ticket search to fetch the transcript for each ticket.')
     async def user_search(self, ctx, user):
         for TicketName in mongo.search.all_tickets_for_user(user):
