@@ -27,7 +27,7 @@ class search():
 
     def by_user_active(uid):
         """
-        Returns a active ticketname or None
+        Returns an active ticketname or None
         """
         terms = {"status" : "active" } 
         query = user_first[str(uid)].find(terms, RemoveID)
