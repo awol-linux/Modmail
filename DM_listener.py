@@ -37,7 +37,7 @@ class DMs(commands.Cog):
             owner = message.author.id
             TicketName = mongo.search.by_user_active(owner)
 
-            # If the woner doesn't have any tickets then create one
+            # If the owner doesn't have any tickets then create one
             if not TicketName:
 
                 user_info = {
