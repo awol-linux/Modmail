@@ -32,14 +32,14 @@ class search(commands.Cog):
         await admin_log.send(embed=embedVar)
 
     @commands.has_permissions(administrator=True)
-    @commands.command(name='user_search', help='Returns all tickets for user and runs them through ticket search')
+    @commands.command(name='user_search', help='Gets all tickets for a user and uses ticket search to fetch the transcript for each ticket.')
     async def user_search(self, ctx, user):
         for TicketName in mongo.search.all_tickets_for_user(user):
             print(TicketName)
             await self.ticket_search(ctx, TicketName)
 
     @commands.has_permissions(administrator=True)
-    @commands.command(name='mod_search', help='Returns all tickets that a user messaged in and runs them through ticket search')
+    @commands.command(name='mod_search', help='Gets all tickets that a user sent messages in and uses ticket search to fetch the transcript for each ticket.')
     async def mod_search(self, ctx, user):
         user_object = await self.bot.fetch_user(user)
         username = user_object.name + '#' + user_object.discriminator
