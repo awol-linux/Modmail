@@ -40,6 +40,4 @@ bot.load_extension('search_commands')
 bot.load_extension('other_commands')
 
 
-
-
 bot.run(TOKEN)
