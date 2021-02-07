@@ -107,7 +107,8 @@ class settings_commands(commands.Cog):
     async def reload(self, ctx):
         self.bot.reload_extension('other_commands')
         self.bot.reload_extension('search_commands')
-        self.bot.reload_extension('tickets')
+        self.bot.reload_extension('category_listener')
+        self.bot.reload_extension('DM_listener')
         self.bot.command_prefix = settings.get('prefix')
         if ctx.command == 'reload':
             await ctx.reply('reloaded')

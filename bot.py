@@ -33,12 +33,11 @@ async def on_ready():
     print('Prefix is: {}'.format(settings.get('prefix')))
     print('Category ID: {}'.format(settings.get('category_id')))
 
+
 bot.load_extension('category_listener')
 bot.load_extension('DM_listener')
 bot.load_extension('search_commands')
 bot.load_extension('other_commands')
-
-
 
 
 bot.run(TOKEN)
