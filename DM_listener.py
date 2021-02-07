@@ -61,7 +61,7 @@ class DMs(commands.Cog):
             message_data = {"content": message.content, 
                     "author": message.author.name + '#' + message.author.discriminator, 
                     "Time" : time,
-                    "usr_message_id" : message.id
+                    "user_message_id" : message.id
                     }
 
             # Insert into DB
