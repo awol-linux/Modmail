@@ -13,6 +13,9 @@ RemoveID = { "addresses": { "$slice": [0, 1] } ,'_id': 0}
 
 class search():
     def all_tickets_for_user(uid):
+        """
+        Returns all ticketnames from specified user
+        """
         #terms = { "TicketName" : {"$exists" : "true" } } 
         terms = {} 
         query = user_first[str(uid)].find(terms, RemoveID)
@@ -23,6 +26,9 @@ class search():
         return ticket_names
 
     def by_user_active(uid):
+        """
+        Returns an active ticketname or None
+        """
         terms = {"status" : "active" } 
         query = user_first[str(uid)].find(terms, RemoveID)
         tickets = []
@@ -35,6 +41,9 @@ class search():
             return None
 
     def by_ticket(TicketName):
+        """
+        Returns full ticket by ticket name
+        """
         terms = {}
         query = ticket_first[TicketName].find(terms, RemoveID)
         tickets = []
@@ -48,6 +57,9 @@ class search():
 
 
     def add_message(owner, TicketName, message_data):
+        """
+        Add message to a ticket
+        """
         terms = {"uid": owner}
         push_message = {'$push': {'messages': message_data}}
         update_count = {"$inc" : { "Count" : 1}}
@@ -56,6 +68,9 @@ class search():
         ticket_first[TicketName].update_one(terms, update_count)
 
     def new_ticket(user_info):
+        """
+        Opens a new ticket for user
+        """
         amount = len(ticket_first.list_collection_names()) + 1
         TicketName = 'ticket-' + str(amount)
         user_info['TicketName'] = TicketName
@@ -67,6 +82,9 @@ class search():
         return TicketName
 
     def get_owner(TicketName):
+        """
+        Returns the ticket owner
+        """
         terms = {}
         query = ticket_first[TicketName].find(terms, RemoveID)
         tickets = []
@@ -80,6 +98,9 @@ class search():
 
 
     def get_messages_by_tickets(TicketName):
+        """
+        Returns all messages by ticket name
+        """
         terms = { 'author': {'$exists': 'true' }}
         query = ticket_first[TicketName].find(terms, RemoveID)
         tickets = []
@@ -93,6 +114,9 @@ class search():
 
 
     def all_messages_by_user(username):
+        """
+        Returns all tickets (full) by user
+        """
         all_messages = []
         for ticket in ticket_first.list_collection_names():
             terms = { 'messages.author' : username }
@@ -103,6 +127,9 @@ class search():
         return all_messages
 
     def archive_channel(TicketName):
+        """
+        Archives a ticket
+        """
         terms = { "uid" : {"$exists" : "true" } }
         tickets = []
         for ticket in ticket_first[TicketName].find(terms, RemoveID):
@@ -120,6 +147,9 @@ class settings():
         self.test = 'test'
 
     def get(self, othersetting):
+        """
+        Returns a settings value
+        """
         terms = { 'name' : othersetting }       
         values = []
         for value in settingcol.find(terms, RemoveID):
@@ -132,6 +162,9 @@ class settings():
             return values
 
     def print_all(self):
+       """
+       list all settings
+       """
        terms = {}
        values = []
        for value in settingcol.find(terms, RemoveID):
@@ -139,11 +172,17 @@ class settings():
        return values
 
     def create(self, key, value):
+        """
+        create a new setting if it doesn't exist if not update current setting
+        """
         terms = { 'name' : key }
         setting = { '$set' : { 'value' : value }}
         settingcol.update_one(terms, setting, upsert = True)
 
     def update(self, key, value):
+        """
+        Update setting
+        """
         if self.get(key):
             oldkey = self.get(key)
             terms = { 'name' : key }
@@ -151,7 +190,11 @@ class settings():
             settingcol.update_one(terms, setting)
             out = { 'oldkey' : oldkey, 'newkey': self.get(key) }
             return out
+
     def get_description(self, name):
+        """
+        Returns setting description
+        """
         terms = { 'name' : name }
         values = []
         for value in settingcol.find(terms, RemoveID):
