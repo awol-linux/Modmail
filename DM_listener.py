@@ -81,6 +81,8 @@ class DMs(commands.Cog):
                 await guild.create_text_channel(TicketName, category=category)
                 channel = discord.utils.get(guild.text_channels, name=TicketName)
                 print(channel)
+                # sends the user id to channel
+                await channel.send(f"started a ticket from {str(message.author)}")
 
             # send message in channel
             sent_message = await channel.send(message.content)
