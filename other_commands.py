@@ -105,12 +105,13 @@ class settings_commands(commands.Cog):
     @commands.has_permissions(administrator=True)
     @commands.command(name='reload', help='Manually reload config')
     async def reload(self, ctx):
+        await ctx.channel.send(ctx.command)
         self.bot.reload_extension('other_commands')
         self.bot.reload_extension('search_commands')
         self.bot.reload_extension('category_listener')
         self.bot.reload_extension('DM_listener')
         self.bot.command_prefix = settings.get('prefix')
-        if ctx.command == 'reload':
+        if str(ctx.command) == 'reload':
             await ctx.reply('reloaded')
 
     @commands.has_permissions(administrator=True)

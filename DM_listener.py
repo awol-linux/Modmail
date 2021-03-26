@@ -84,4 +84,3 @@ class DMs(commands.Cog):
 
             # send message in channel
             sent_message = await channel.send(message.content)
-            mongo.search.append_id(TicketName, message.id, sent_message)

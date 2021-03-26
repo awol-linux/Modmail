@@ -25,7 +25,6 @@ class responses(commands.Cog):
 
         # If DM return
         elif not hasattr(message.channel, 'category_id'):
-            print(DM)
             return
 
         # If message is in ticket category
