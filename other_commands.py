@@ -1,9 +1,19 @@
 from discord.ext import commands
 import discord
 import mongo
+import time
 from difflib import get_close_matches
+import psutil 
+
 settings = mongo.settings()
 log_channel_id = settings.get('log_channel_id')
+
+def sizeof_fmt(num, suffix='B'):
+    for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
+        if abs(num) < 1024.0:
+            return "%3.1f%s%s" % (num, unit, suffix)
+        num /= 1024.0
+    return "%.1f%s%s" % (num, 'Yi', suffix)
 
 def setup(bot):
     bot.add_cog(admin(bot))
@@ -14,7 +24,20 @@ class admin(commands.Cog):
         self.bot = bot
         self._last_member = None
 
-    @commands.has_permissions(administrator=True)
+    @commands.check_any(commands.has_permissions(administrator=True), commands.has_any_role(settings.get('admin_roles')))
+    @commands.command(name='ping', help='Archives the complaint putting a full log in admin log')
+    async def ping(self, ctx):
+        time_1 = time.perf_counter()
+        await ctx.trigger_typing()
+        time_2 = time.perf_counter()
+        ping = round((time_2-time_1)*1000)
+        embedVar = discord.Embed(title='status', inline=True)
+        embedVar.add_field(name='Ping', value=ping, inline=True)
+        embedVar.add_field(name='CPU', value=f"Average {psutil.cpu_percent(interval=1, percpu=False)} max {max(psutil.cpu_percent(interval=1, percpu=True))}", inline=True)
+        embedVar.add_field(name='Memory', value=f"Available {sizeof_fmt(psutil.virtual_memory().available)} total {sizeof_fmt(psutil.virtual_memory().total)}", inline=True)
+
+        await ctx.reply(embed=embedVar)
+    @commands.check_any(commands.has_permissions(administrator=True), commands.has_any_role(settings.get('admin_roles')))
     @commands.command(name='close', help='Archives the complaint putting a full log in admin log')
     async def close(self, ctx):
         TicketName = ctx.channel.name
@@ -105,7 +128,7 @@ class settings_commands(commands.Cog):
     @commands.has_permissions(administrator=True)
     @commands.command(name='reload', help='Manually reload config')
     async def reload(self, ctx):
-        await ctx.channel.send(ctx.command)
+        await ctx.channel.trigger_typing()
         self.bot.reload_extension('other_commands')
         self.bot.reload_extension('search_commands')
         self.bot.reload_extension('category_listener')

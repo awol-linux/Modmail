@@ -27,6 +27,10 @@ class responses(commands.Cog):
         elif not hasattr(message.channel, 'category_id'):
             return
 
+         # Make sure its not a command
+        elif message.content[0] == settings.get('prefix'):
+            return
+
         # If message is in ticket category
         elif message.channel.category_id == category_id:
 
